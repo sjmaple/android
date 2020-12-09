@@ -1138,7 +1138,11 @@ class FileDisplayActivity : FileActivity(), FileFragment.ContainerActivity, OnEn
             setupToolbar(ToolbarConfig.ToolbarRoot(title, true))
             listOfFilesFragment?.setSearchListener(findViewById(R.id.root_toolbar_search_view))
         } else {
-            setupToolbar(ToolbarConfig.ToolbarStandard(chosenFile?.fileName!!, true))
+            setupToolbar(ToolbarConfig.ToolbarStandard(
+                title = chosenFile?.fileName!!,
+                displayHomeAsUpEnabled = true,
+                homeButtonEnabled = true
+            ))
         }
     }
 

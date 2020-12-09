@@ -749,8 +749,4 @@ public class OCFile implements Parcelable, Comparable<OCFile> {
         setTreeEtag(sourceFile.getTreeEtag());
         setEtagInConflict(sourceFile.getEtagInConflict());
     }
-
-    public boolean isRoot() {
-        return this == null || this.isFolder() && this.getParentId() == FileDataStorageManager.ROOT_PARENT_ID;
-    }
 }

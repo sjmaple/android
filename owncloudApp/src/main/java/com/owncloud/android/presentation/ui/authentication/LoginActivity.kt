@@ -39,9 +39,9 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.WindowManager.LayoutParams.FLAG_SECURE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.Observer
 import com.owncloud.android.MainApp
 import com.owncloud.android.MainApp.Companion.accountType
 import com.owncloud.android.R
@@ -170,7 +170,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
         accountAuthenticatorResponse?.onRequestContinued()
 
         // LiveData observers
-        authenticationViewModel.serverInfo.observe(this, Observer { event ->
+        authenticationViewModel.serverInfo.observe(this, { event ->
             when (event.peekContent()) {
                 is UIResult.Success -> getServerInfoIsSuccess(event.peekContent())
                 is UIResult.Loading -> getServerInfoIsLoading()
@@ -178,7 +178,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
             }
         })
 
-        authenticationViewModel.loginResult.observe(this, Observer { event ->
+        authenticationViewModel.loginResult.observe(this, { event ->
             when (event.peekContent()) {
                 is UIResult.Success -> loginIsSuccess(event.peekContent())
                 is UIResult.Loading -> loginIsLoading()
@@ -186,7 +186,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
             }
         })
 
-        authenticationViewModel.supportsOAuth2.observe(this, Observer { event ->
+        authenticationViewModel.supportsOAuth2.observe(this, { event ->
             when (event.peekContent()) {
                 is UIResult.Success -> updateAuthTokenTypeAndInstructions(event.peekContent())
                 is UIResult.Error -> showErrorInToast(
@@ -196,7 +196,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
             }
         })
 
-        authenticationViewModel.baseUrl.observe(this, Observer { event ->
+        authenticationViewModel.baseUrl.observe(this, { event ->
             when (event.peekContent()) {
                 is UIResult.Success -> updateBaseUrlAndHostInput(event.peekContent())
                 is UIResult.Error -> showErrorInToast(
@@ -610,7 +610,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
             if (contextProvider.getBoolean(R.bool.use_login_background_image)) {
                 login_background_image.visibility = VISIBLE
             } else {
-                setBackgroundColor(resources.getColor(R.color.login_background_color))
+                setBackgroundColor(ContextCompat.getColor(context, R.color.login_background_color))
             }
         }
 
